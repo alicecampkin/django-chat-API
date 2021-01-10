@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('user.urls')),
     path('profile/', include('userprofile.urls')),
-    # blog urls must go last!
+    path('api-auth/', include('rest_framework.urls'))
 ]
 
 # We only store media locally when a project is in development (DEBUG = True)
