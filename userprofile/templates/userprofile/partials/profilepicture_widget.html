@@ -6,11 +6,11 @@
 
         {% if user.profile.profile_picture %}
         <img src="{{user.profile.profile_picture.url}}" style="object-fit:cover;" class="rounded-circle w-100 h-100"
-            alt="Profile photo for {{user.first_name}} {{user.last_name}}">
+            alt="Profile photo for {{user.full_name}} {{user.display_name}}">
         {% else %}
         <img src="{% static 'images/people-default.svg' %}" style="object-fit:cover;"
             class="rounded-circle w-100 h-100 img-fluid"
-            alt="placeholder photo of {{user.first_name}} {{user.last_name}}">
+            alt="placeholder photo of {{user.full_name}} {{user.display_name}}">
         {% endif %}
         <div class="profile_picture__overlay"><i class="fas fa-camera text-white"></i></div>
         <p class="text-muted text-center small mt-2">change</p>

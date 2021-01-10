@@ -1,4 +1,4 @@
-"""bloggingplatform URL Configuration
+"""chatAPI URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -17,16 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from blog.views import index
 
 urlpatterns = [
-    path('', index, name='index'),
     path('admin/', admin.site.urls),
     path('', include('user.urls')),
     path('profile/', include('userprofile.urls')),
-    path('summernote/', include('django_summernote.urls')),
     # blog urls must go last!
-    path('', include('blog.urls')),
 ]
 
 # We only store media locally when a project is in development (DEBUG = True)

@@ -20,8 +20,8 @@ class TestProfileModel(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = USER_MODEL.objects.create_user(
-            first_name='Jane',
-            last_name='Doe',
+            full_name='Jane',
+            display_name='Doe',
             email='janedoe@test.com',
             username='janedoe',
             password='password123'

@@ -18,8 +18,8 @@ class TestProfileView(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = USER_MODEL.objects.create_user(
-            first_name='Jane',
-            last_name='Doe',
+            full_name='Jane',
+            display_name='Doe',
             email='janedoe@test.com',
             username='janedoe',
             password='password123'
@@ -48,8 +48,8 @@ class TestProfileView(TestCase):
         """ Tests that a new user can create a profile in the same view. """
 
         new_user = USER_MODEL.objects.create_user(
-            first_name='Charlotte',
-            last_name='Bronte',
+            full_name='Charlotte',
+            display_name='Bronte',
             email='charlottebronte@test.com',
             username='cbronte',
             password='pass123456'
@@ -86,8 +86,8 @@ class TestProfileView(TestCase):
         """ Tests a user can create a profile """
 
         new_user = USER_MODEL.objects.create_user(
-            first_name='Charlotte',
-            last_name='Bronte',
+            full_name='Charlotte',
+            display_name='Bronte',
             email='charlottebronte@test.com',
             username='cbronte',
             password='pass123456'
@@ -121,8 +121,8 @@ class TestProfilePhotoView(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = USER_MODEL.objects.create_user(
-            first_name='Jane',
-            last_name='Doe',
+            full_name='Jane',
+            display_name='Doe',
             email='janedoe@test.com',
             username='janedoe',
             password='password123'
@@ -193,8 +193,8 @@ class TestCoverPhotoView(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = USER_MODEL.objects.create_user(
-            first_name='Jane',
-            last_name='Doe',
+            full_name='Jane',
+            display_name='Doe',
             email='janedoe@test.com',
             username='janedoe',
             password='password123'

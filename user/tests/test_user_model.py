@@ -21,16 +21,16 @@ class TestUserManager(TestCase):
             email='janedoe@test.com',
             password='pass123',
             username='Jane-d_codes',
-            first_name='Jane',
-            last_name='Doe',
+            full_name='Jane',
+            display_name='Doe',
         )
 
         cls.superuser = get_user_model().objects.create_superuser(
             email='superuser@test.com',
             password='pass456',
             username='thesuperuser',
-            first_name='Super',
-            last_name='User'
+            full_name='Super',
+            display_name='User'
         )
 
     def test_create_user(self):
@@ -38,16 +38,16 @@ class TestUserManager(TestCase):
 
         self.assertEqual(self.user.email, 'janedoe@test.com')
         self.assertEqual(self.user.username, 'jane-d_codes')
-        self.assertEqual(self.user.first_name, 'Jane')
-        self.assertEqual(self.user.last_name, 'Doe')
+        self.assertEqual(self.user.full_name, 'Jane')
+        self.assertEqual(self.user.display_name, 'Doe')
 
     def test_create_superuser(self):
         """ Tests the createsuperuser method"""
 
         self.assertEqual(self.superuser.email, 'superuser@test.com')
         self.assertEqual(self.superuser.username, 'thesuperuser')
-        self.assertEqual(self.superuser.first_name, 'Super')
-        self.assertEqual(self.superuser.last_name, 'User')
+        self.assertEqual(self.superuser.full_name, 'Super')
+        self.assertEqual(self.superuser.display_name, 'User')
 
     def test_username_uniqueness(self):
         """ Tests that two users cannot have the same username """
@@ -57,8 +57,8 @@ class TestUserManager(TestCase):
                 email='janeshaw@test.com',
                 password='pass123',
                 username='Jane-d_coDes',
-                first_name='Jane',
-                last_name='Shaw',
+                full_name='Jane',
+                display_name='Shaw',
             )
 
     def test_no_special_characters_in_username(self):
@@ -73,8 +73,8 @@ class TestUserManager(TestCase):
                     email='janeshaw@test.com',
                     password='pass123',
                     username=f'jane_co{bad_character}des',
-                    first_name='Jane',
-                    last_name='Shaw',
+                    full_name='Jane',
+                    display_name='Shaw',
                 )
 
     def test_username_field(self):

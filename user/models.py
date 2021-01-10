@@ -6,15 +6,15 @@ from django.core.exceptions import ValidationError
 
 class UserManager(BaseUserManager):
 
-    def create_user(self, email, password, first_name, last_name, username):
+    def create_user(self, email, password, full_name):
         """ Creates and saves a user """
 
-        self.validate_required_fields(email, first_name, last_name, username)
+        self.validate_required_fields(email, full_name, display_name, username)
 
         user = self.model(
             email=self.normalize_email(email),
-            first_name=first_name,
-            last_name=last_name,
+            full_name=full_name,
+            display_name=display_name,
             username=username.lower()
         )
 
@@ -23,14 +23,14 @@ class UserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email, password, first_name, last_name, username):
+    def create_superuser(self, email, password, full_name):
         """ Creates and saves a superuser """
 
         user = self.create_user(
             email=email,
             password=password,
-            first_name=first_name,
-            last_name=last_name,
+            full_name=full_name,
+            display_name=display_name,
             username=username
         )
 
@@ -40,20 +40,15 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def validate_required_fields(self, email, first_name, last_name, username):
+    def validate_required_fields(self, email, full_name):
         """ Raises value errors if any required field is None """
 
         if not email:
             raise ValueError('Please provide a valid email')
         elif not username:
             raise ValueError('Please provide a valid username')
-        elif not first_name:
-            raise ValueError('Please provide a first name')
-        elif not last_name:
-            raise ValueError('Please provide a last name')
-
-        if slugify(username) != username.lower():
-            raise ValidationError('Invalid username')
+        elif not full_name:
+            raise ValueError('Please provide a name')
 
         return
 
@@ -62,9 +57,7 @@ class User(AbstractBaseUser):
     """ Custom user model users email as the identifier"""
 
     email = models.EmailField(max_length=255, unique=True)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    username = models.SlugField(max_length=50, unique=True)
+    full_name = models.CharField(max_length=100)
 
     account_created = models.DateTimeField(auto_now_add=True)
 
@@ -75,10 +68,10 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'username']
+    REQUIRED_FIELDS = ['full_name']
 
     def __str__(self):
-        return self.email
+        return f'{self.full_name} | {self.email}'
 
     # has_perm and has_module_perms required to view users in Admin
 

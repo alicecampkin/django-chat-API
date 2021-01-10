@@ -22,8 +22,8 @@ class TestUserRegistration(TestCase):
     def test_post_request(self):
         form_data = {
             'email': 'janedoe@test.com',
-            'first_name': 'Jane',
-            'last_name': 'Doe',
+            'full_name': 'Jane',
+            'display_name': 'Doe',
             'username': 'janedoe',
             'password':'secretpassword',
             'password2':'secretpassword',

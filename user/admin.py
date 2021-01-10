@@ -10,11 +10,11 @@ class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = CustomUserCreationForm
 
-    list_display = ('email', 'first_name', 'last_name', 'is_admin')
+    list_display = ('email', 'full_name', 'is_admin')
     list_filter = ('is_admin',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'username')}),
+        ('Personal info', {'fields': ('full_name',)}),
         ('Permissions', {'fields': ('is_admin', 'is_staff', 'is_active')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -22,7 +22,7 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2'),
+            'fields': ('email', 'full_name', 'password1', 'password2'),
         }),
     )
     search_fields = ('email',)
