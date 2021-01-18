@@ -1,13 +1,10 @@
-from .forms import CustomUserCreationForm
-from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from rest_framework import generics
+from rest_framework.permissions import AllowAny
+from .serializers import UserSerializer
 from django.contrib.auth import get_user_model
 
-USER_MODEL = get_user_model()
 
-
-class Register(CreateView):
-    model = USER_MODEL
-    form_class = CustomUserCreationForm
-    template_name = 'user/register.html'
-    success_url = reverse_lazy('index')
+class RegisterUserView(generics.CreateAPIView):
+    serializer_class = UserSerializer
+    queryset = get_user_model().objects.all()
+    permission_classes = [AllowAny]

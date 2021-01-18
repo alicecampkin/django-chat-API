@@ -9,13 +9,11 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password, full_name):
         """ Creates and saves a user """
 
-        self.validate_required_fields(email, full_name, display_name, username)
+        self.validate_required_fields(email, full_name)
 
         user = self.model(
             email=self.normalize_email(email),
             full_name=full_name,
-            display_name=display_name,
-            username=username.lower()
         )
 
         user.set_password(password)
@@ -30,8 +28,6 @@ class UserManager(BaseUserManager):
             email=email,
             password=password,
             full_name=full_name,
-            display_name=display_name,
-            username=username
         )
 
         user.is_admin = True
@@ -45,8 +41,7 @@ class UserManager(BaseUserManager):
 
         if not email:
             raise ValueError('Please provide a valid email')
-        elif not username:
-            raise ValueError('Please provide a valid username')
+
         elif not full_name:
             raise ValueError('Please provide a name')
 

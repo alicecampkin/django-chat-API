@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('user.urls')),
+    path('user/', include('user.urls')),
     path('profile/', include('userprofile.urls')),
     path('api-auth/', include('rest_framework.urls'))
 ]
@@ -29,5 +29,7 @@ urlpatterns = [
 # Once deployed, we will need to host static assets elsewhere (e.g. AWS S3 bucket)
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL,
+                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
