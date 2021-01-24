@@ -15,6 +15,11 @@ class TestAPICreateUser(TestCase):
         cls.client = APIClient()
         cls.create_user_url = reverse("register")
 
+    def tearDown(self):
+        users = USER_MODEL.objects.all()
+        for user in users:
+            user.delete()
+
     def test_register_user(self):
         """ Tests we can create a user with a valid payload """
 
