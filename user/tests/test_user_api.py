@@ -81,3 +81,29 @@ class TestAPICreateUser(TestCase):
             response = self.client.post(self.create_user_url, payload)
             self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
             response = None
+
+
+class TestAPIAuthenticate(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = USER_MODEL.objects.create(
+            email="t@test.com",
+            full_name='Tom Test',
+            password='password1234'
+        )
+
+        cls.client = APIClient()
+        cls.login_url = reverse("login")
+
+    def test_authenticate(self):
+        """ test a valid email and password authenticates the user. """
+
+        payload = {
+            "email": "t@test.com",
+            "password": "password1234"
+        }
+
+        response = self.client.post(self.login_url, payload)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
