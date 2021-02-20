@@ -5,3 +5,5 @@ pillow
 djangorestframework
 markdown
 django-filter
+httpie
+djangorestframework_simplejwt
