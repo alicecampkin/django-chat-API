@@ -7,23 +7,49 @@ from rest_framework import status
 
 USER_MODEL = get_user_model()
 
+
+def create_user(**params):
+    return get_user_model().objects.create_user(**params)
+
+
 class TestAuth(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.user = USER_MODEL.objects.create(
-            email='jane.deux@test.com',
-            password='pawwsord1234'
-        )
+        cls.client = APIClient()
 
     def test_obtain_token(self):
         login_url = reverse('token_obtain_pair')
 
         payload = {
-            'email': self.user.email,
-            'password': self.user.password
+            'email': 'jane.deux@test.com',
+            'full_name': 'Jane Deux',
+            'password': 'pawwsord1234'
         }
 
-        response = APIClient.post(login_url, payload)
+        create_user(**payload)
 
-        self.assertEqual(response.status_code, 200)
+        response = self.client.post(
+            login_url, payload)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('refresh', response.data)
+        self.assertIn('access', response.data)
+
+    def test_bad_password_no_token(self):
+        login_url = reverse('token_obtain_pair')
+
+        payload = {
+            'email': 'jane.deux@test.com',
+            'full_name': 'Jane Deux',
+            'password': 'wrongpawwsord1234'
+        }
+
+        create_user(**payload)
+
+        response = self.client.post(
+            login_url, {'email': 'jane.deux@test.com', 'password': 'password'})
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertNotIn('refresh', response.data)
+        self.assertNotIn('access', response.data)
